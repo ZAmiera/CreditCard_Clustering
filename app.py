@@ -4,29 +4,22 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-
-# Load the dataset (replace with your actual dataset path)
-# For demonstration, we will create a sample DataFrame
-data = {
-    'BALANCE': np.random.uniform(0, 10000, 100),
-    'PURCHASES': np.random.uniform(0, 5000, 100),
-    'CREDIT_LIMIT': np.random.uniform(1000, 15000, 100)
-}
-df = pd.DataFrame(data)
+ 
+df = pd.read_csv('data5_clean_w5.csv')
 
 def main():
     st.title("Credit Card Customers Clustering Dashboard")
     st.write("This app visualizes clustering data for credit card customers.")
 
-    # Display the dataset
+    # Display  
     st.subheader("Customer Data")
     st.dataframe(df)
 
-    # Elbow Method for optimal number of clusters
+    # Elbow Method  
     st.subheader("Elbow Method")
     max_k = st.slider("Select the maximum number of clusters (k)", 1, 10, 5)
     
-    # Calculate the WCSS (Within-Cluster Sum of Squares)
+    # Within-Cluster Sum of Squares
     wcss = []
     for i in range(1, max_k + 1):
         kmeans = KMeans(n_clusters=i, random_state=42)
@@ -51,10 +44,10 @@ def main():
 
     # Plotting the scatter plot
     plt.figure(figsize=(10, 5))
-    plt.scatter(df['BALANCE'], df['PURCHASES'], c=df['Cluster'], cmap='viridis', alpha=0.6)
+    plt.scatter(df['BALANCE'], df['CREDIT_LIMIT'], c=df['Cluster'], cmap='viridis', alpha=0.6)
     plt.title(f'Scatter Plot of Credit Card Customers (k={k})')
     plt.xlabel('Balance')
-    plt.ylabel('Purchases')
+    plt.ylabel('Credit Limit')
     plt.colorbar(label='Cluster')
     st.pyplot(plt)
 
